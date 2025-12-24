@@ -1,0 +1,113 @@
+/* Page Wrapper */
+.login-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0f172a; /* Slate 900 */
+  overflow: hidden;
+}
+
+/* Login Card */
+.login-paper {
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 590px;
+  border-radius: 12px;
+  background-color: #1e293b !important; /* Slate 800 - !important overrides default paper white */
+  color: #f8fafc !important;
+  border: 1px solid #334155;
+}
+
+/* Header Section */
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo-circle {
+  margin: 0 auto 16px;
+  background-color: #3b82f6;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.login-title {
+  color: #f8fafc;
+  font-weight: bold !important;
+}
+
+.login-subtitle {
+  color: #94a3b8;
+  margin-top: 8px !important;
+}
+
+/* Error Alert */
+.login-alert {
+  margin-bottom: 24px;
+  background-color: #450a0a !important;
+  color: #fecaca !important;
+  border: 1px solid #991b1b;
+}
+
+/* Input Fields Customization (Overriding MUI defaults) */
+.login-input .MuiOutlinedInput-root {
+  color: #e2e8f0;
+}
+
+.login-input .MuiOutlinedInput-root fieldset {
+  border-color: #475569;
+}
+
+.login-input .MuiOutlinedInput-root:hover fieldset {
+  border-color: #94a3b8;
+}
+
+.login-input .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #3b82f6 !important;
+}
+
+.login-input .MuiInputLabel-root {
+  color: #94a3b8;
+}
+
+.login-input .MuiInputLabel-root.Mui-focused {
+  color: #3b82f6 !important;
+}
+
+/* Submit Button */
+.login-button {
+  margin-top: 32px !important;
+  margin-bottom: 16px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  font-size: 1rem !important;
+  font-weight: bold !important;
+  background-color: #3b82f6 !important;
+}
+
+.login-button:hover {
+  background-color: #2563eb !important;
+}
+
+/* Helper Box */
+.login-helper-box {
+  margin-top: 8px;
+  padding: 16px;
+  background-color: #0f172a;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+.login-helper-text {
+  color: #cbd5e1;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.highlight {
+  color: #60a5fa;
+}

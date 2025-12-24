@@ -1,0 +1,54 @@
+/* src/App.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+/* 1. LAYOUT WRAPPER: Puts Sidebar (left) and Main (right) side-by-side */
+.app-layout {
+  display: flex !important;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0f172a;
+}
+
+/* 2. SIDEBAR: Fixed width, dark color */
+.app-sidebar {
+  width: 260px;
+  min-width: 260px;       
+  height: 100%;
+  background-color: #1e293b; 
+  border-right: 1px solid #334155;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 3. MAIN AREA: Grows to fill the rest of the screen */
+.app-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 4. HEADER: Fixed at the top */
+.app-header {
+  height: 64px;
+  background-color: #1e293b;
+  border-bottom: 1px solid #334155;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center; 
+  padding: 0 24px;
+}
+
+/* 5. CONTENT: The only part that scrolls */
+.app-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 24px;
+}

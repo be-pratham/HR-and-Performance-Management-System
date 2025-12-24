@@ -1,0 +1,152 @@
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.settings-layout {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.settings-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.settings-tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.settings-tab:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.settings-tab.active {
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #3b82f6;
+}
+
+/* --- Main Content Area --- */
+.settings-content {
+  flex-grow: 1;
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  min-height: 500px;
+}
+
+.section-title h2 { margin: 0 0 8px 0; font-size: 1.25rem; }
+.section-title p { margin: 0 0 24px 0; color: #94a3b8; font-size: 0.9rem; }
+
+/* --- Profile Tab --- */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.profile-avatar-large {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background-color: #334155;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem; font-weight: bold;
+  border: 2px solid #3b82f6;
+}
+
+.btn-upload {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.full-width { grid-column: span 2; }
+
+/* --- Notification Toggles --- */
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.toggle-info h4 { margin: 0 0 4px 0; font-size: 0.95rem; }
+.toggle-info p { margin: 0; font-size: 0.8rem; color: #94a3b8; }
+
+/* The Toggle Switch CSS */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #334155;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #3b82f6;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* --- Action Footer --- */
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}

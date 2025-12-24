@@ -1,0 +1,111 @@
+/* src/components/styles/ProgressWidget.css */
+
+.widget-card {
+  background-color: #1e293b; /* Matches your other cards */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  color: white;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.widget-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.icon-more {
+  color: #94a3b8;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.icon-more:hover {
+  opacity: 1;
+}
+
+/* Chart Positioning */
+.chart-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  height: 160px;
+}
+
+/* This centers the text inside the SVG ring */
+.chart-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.chart-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: white;
+}
+
+.chart-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Bottom Stats Grid */
+.widget-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 12px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* Subtle separator line */
+  padding-top: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Utility Colors for the numbers */
+.color-green { color: #10b981; }
+.color-blue { color: #3b82f6; }
+.color-grey { color: #64748b; }
+
+/* The "Total Goals" row at the bottom */
+.stat-full {
+  grid-column: span 3; /* Stretch across all 3 columns */
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #64748b;
+}

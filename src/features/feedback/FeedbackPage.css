@@ -1,0 +1,213 @@
+/* src/pages/styles/feedbackPage.css */
+
+.feedback-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.feedback-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Feed takes 66%, Sidebar 33% */
+  gap: 24px;
+  align-items: start;
+}
+
+/* --- Feed Section --- */
+.feed-header {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feed-header h3 { margin: 0; font-size: 1.1rem; }
+
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kudos-card {
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  gap: 16px;
+  transition: transform 0.2s;
+}
+
+.kudos-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.kudos-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.kudos-content {
+  flex-grow: 1;
+}
+
+.kudos-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.kudos-author { font-size: 0.95rem; font-weight: 600; }
+.kudos-author span { color: #94a3b8; font-weight: 400; }
+.kudos-time { font-size: 0.75rem; color: #64748b; }
+
+.kudos-message {
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.kudos-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tag {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.tag.Teamwork { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border-color: rgba(59, 130, 246, 0.2); }
+.tag.Leadership { background: rgba(168, 85, 247, 0.15); color: #a855f7; border-color: rgba(168, 85, 247, 0.2); }
+.tag.Innovation { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border-color: rgba(245, 158, 11, 0.2); }
+
+.kudos-actions {
+  display: flex;
+  gap: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 12px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.action-btn:hover { color: white; }
+.action-btn.liked { color: #ec4899; } /* Pink when liked */
+
+/* --- Sidebar --- */
+.feedback-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-kudos {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+.btn-kudos:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); }
+
+.btn-request {
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+.btn-request:hover { background-color: rgba(255, 255, 255, 0.05); }
+
+/* Private Notes Widget */
+.notes-widget {
+  background-color: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.notes-header h4 { margin: 0; font-size: 0.95rem; }
+
+.notes-area {
+  width: 100%;
+  height: 200px;
+  background-color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 12px;
+  color: #cbd5e1;
+  resize: none;
+  font-size: 0.9rem;
+  outline: none;
+  margin-bottom: 12px;
+}
+.notes-area:focus { border-color: #3b82f6; }
+
+/* Modal specific styles for this page (if needed) */
+.tag-selector {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.tag-chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.tag-chip.selected {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border-color: #3b82f6;
+}

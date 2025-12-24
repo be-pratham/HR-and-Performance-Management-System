@@ -1,0 +1,238 @@
+/* src/pages/LeavePage.css */
+
+/* --- Main Layout --- */
+.approvals-container {
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #0f172a; /* Slate 900 */
+  color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* --- Typography --- */
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 8px 0;
+}
+
+.page-subtitle {
+  color: #94a3b8; /* Slate 400 */
+  margin: 0 0 32px 0;
+  font-size: 1rem;
+}
+
+/* --- Grid Layout --- */
+.requests-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+/* --- Card Styling --- */
+.request-card {
+  background-color: #1e293b; /* Slate 800 */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.request-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.card-name {
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.card-role {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin: 2px 0 0 0;
+}
+
+/* --- Chips --- */
+.status-chip {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.chip-pending { background-color: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.chip-approved { background-color: rgba(16, 185, 129, 0.15); color: #34d399; }
+.chip-rejected { background-color: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+/* --- Details Section --- */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #cbd5e1; /* Slate 300 */
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* --- BUTTONS (The Fix) --- */
+.card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Base Button Style */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  outline: none;
+  gap: 8px;
+}
+
+/* Primary Action (Approve / Add) - Matches Image 1 */
+.btn-primary {
+  background-color: #2563eb; /* Blue 600 */
+  color: white;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+}
+.btn-primary:hover {
+  background-color: #1d4ed8; /* Blue 700 */
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Danger Action (Reject) - Outlined to reduce noise */
+.btn-danger {
+  background-color: transparent;
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #ef4444;
+}
+.btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+}
+
+/* Full width logic for card buttons */
+.card-actions .btn {
+  flex: 1; /* Make them equal width */
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1300;
+}
+
+.modal-content-dark {
+  background-color: #1e293b;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title { margin: 0; font-size: 1.25rem; color: #f8fafc; }
+.close-btn { background: none; border: none; color: #94a3b8; cursor: pointer; }
+.close-btn:hover { color: #f8fafc; }
+
+.modal-body { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-label { color: #94a3b8; font-size: 0.875rem; font-weight: 500; }
+
+.dark-input {
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  color: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+}
+.dark-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+
+.modal-footer {
+  padding: 16px 24px;
+  background-color: #0f172a;
+  border-top: 1px solid #334155;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #94a3b8;
+    border: none;
+}
+.btn-ghost:hover { color: #f8fafc; background: rgba(255,255,255,0.05); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
