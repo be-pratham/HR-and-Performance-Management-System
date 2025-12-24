@@ -95,19 +95,18 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/announcements" element={<AnnouncementsPage />} />
         </Route>
-        
-        {/*Need to update as pages are made*/}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]}  />}>
           <Route path="/attendance" element={<AttendancePage />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
-          <Route path="/compensation" element={<SettingsPage />} />
         </Route>
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/employees" element={<EmployeesPage />} />
         </Route>
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/policies" element={<PolicyPage />} />
+        </Route>
+        {/*Need to update as pages are made*/}
+        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
+          <Route path="/compensation" element={<SettingsPage />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
