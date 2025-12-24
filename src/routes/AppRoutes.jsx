@@ -68,7 +68,9 @@ const AppRoutes = () => {
         {/* Common Routes */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE]} />}>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="/dashboard" element={<DashboardPage />} />       
+          <Route path="/dashboard" element={<DashboardPage />} />  
+          <Route path="/settings" element={<SettingsPage />} /> 
+          <Route path="/announcements/:id" element={<AnnouncementViewPage />} />    
         </Route>
 
         {/* Manager & Employee Only */}
@@ -79,31 +81,18 @@ const AppRoutes = () => {
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="/learning" element={<LearningPage />} />  
         </Route>
-
+        {/* Manager Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.MANAGER]} />}>
           <Route path="/approvals" element={<TeamApprovals />} />
         </Route>
-
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE]} />}>
-          <Route path="/settings" element={<SettingsPage />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.MANAGER, ROLES.EMPLOYEE]} />}>
-          <Route path="/announcements/:id" element={<AnnouncementViewPage />} />
-        </Route>
-
         {/* Admin Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/announcements" element={<AnnouncementsPage />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]}  />}>
           <Route path="/attendance" element={<AttendancePage />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/employees" element={<EmployeesPage />} />
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/policies" element={<PolicyPage />} />
         </Route>
+
         {/*Need to update as pages are made*/}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/compensation" element={<SettingsPage />} />
