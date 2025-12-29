@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Target,FileText,MessageSquare,GraduationCap,Settings,ClipboardCheck,Calendar,Users,Clock,DollarSign,Megaphone,Book } from 'lucide-react';
+import { LayoutDashboard, Target, FileText, MessageSquare, GraduationCap, Settings, Users, ClipboardCheck, Calendar, Clock, DollarSign, Megaphone, Book } from 'lucide-react';
 import { useAuth } from '../context/AuthContext'; 
 import './Sidebar.css';
 
@@ -21,12 +21,12 @@ const Sidebar = () => {
     },
 
     // --- Admin & Manager Only ---
-    { 
-      path: '/approvals', 
-      icon: ClipboardCheck, 
-      label: 'Team Approvals', 
-      allowedRoles: ['manager'] 
-    },
+    // { 
+    //   path: '/approvals', 
+    //   icon: ClipboardCheck, 
+    //   label: 'Team Approvals', 
+    //   allowedRoles: ['manager'] 
+    // },
 
     // --- Admin Specific (Routes defined at bottom of AppRoutes) ---
     { 
@@ -35,30 +35,30 @@ const Sidebar = () => {
       label: 'Employees', 
       allowedRoles: ['admin'] 
     },
-    { 
-      path: '/attendance', 
-      icon: Clock, 
-      label: 'Attendance', 
-      allowedRoles: ['admin'] 
-    },
-    { 
-      path: '/compensation', 
-      icon: DollarSign, 
-      label: 'Compensation', 
-      allowedRoles: ['admin'] 
-    },
-    { 
-      path: '/announcements', 
-      icon: Megaphone, 
-      label: 'Announcements', 
-      allowedRoles: ['admin'] 
-    },
-    { 
-      path: '/policies', 
-      icon: Book, 
-      label: 'Policies', 
-      allowedRoles: ['admin'] 
-    },
+    // { 
+    //   path: '/attendance', 
+    //   icon: Clock, 
+    //   label: 'Attendance', 
+    //   allowedRoles: ['admin'] 
+    // },
+    // { 
+    //   path: '/compensation', 
+    //   icon: DollarSign, 
+    //   label: 'Compensation', 
+    //   allowedRoles: ['admin'] 
+    // },
+    // { 
+    //   path: '/announcements', 
+    //   icon: Megaphone, 
+    //   label: 'Announcements', 
+    //   allowedRoles: ['admin'] 
+    // },
+    // { 
+    //   path: '/policies', 
+    //   icon: Book, 
+    //   label: 'Policies', 
+    //   allowedRoles: ['admin'] 
+    // },
 
     // --- Employee & Manager Specific ---
     { 
@@ -73,24 +73,24 @@ const Sidebar = () => {
       label: 'Performance', 
       allowedRoles: ['employee', 'manager'] 
     },
-    { 
-      path: '/leavepage', 
-      icon: Calendar, 
-      label: 'Leaves', 
-      allowedRoles: ['employee', 'manager'] 
-    },
+    // { 
+    //   path: '/leavepage', 
+    //   icon: Calendar, 
+    //   label: 'Leaves', 
+    //   allowedRoles: ['employee', 'manager'] 
+    // },
     { 
       path: '/feedback', 
       icon: MessageSquare, 
       label: 'Feedback', 
       allowedRoles: ['employee', 'manager'] 
     },
-    { 
-      path: '/learning', 
-      icon: GraduationCap, 
-      label: 'Learning', 
-      allowedRoles: ['employee', 'manager'] 
-    },
+    // { 
+    //   path: '/learning', 
+    //   icon: GraduationCap, 
+    //   label: 'Learning', 
+    //   allowedRoles: ['employee', 'manager'] 
+    // },
 
     // --- Common Settings ---
     { 
@@ -114,7 +114,8 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-logo">
         <div className="logo-circle"></div>
-        <h2>Navajna HRMS</h2>
+        {/* Updated Title */}
+        <h2>Navajna PMS</h2>
       </div>
 
       <nav className="sidebar-menu">

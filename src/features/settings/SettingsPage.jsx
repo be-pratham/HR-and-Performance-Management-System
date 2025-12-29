@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { User, Bell, Lock, Shield, Check, Mail, Smartphone, Save } from 'lucide-react';
+import { User, Bell, Lock, Save, Check } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext'; // 1. Import Auth Context
 import './SettingsPage.css';
-import '../../components/ui/modal.css';
+import '../../components/ui/Modal.css';
 
 const SettingsPage = () => {
+  const { user } = useAuth(); // 2. Get the current user from Context
+  
   const [activeTab, setActiveTab] = useState('profile');
   const [snackbar, setSnackbar] = useState({ show: false, message: '' });
 
-  // 1. Profile State
+  // 3. Initialize Profile State (Dynamic)
   const [profile, setProfile] = useState({
-    fullName: 'Pratham Bhardwaj',
-    title: 'Senior Architect',
-    email: 'pratham.b@navajna.com',
-    bio: 'Passionate about cloud architecture and scalable systems.'
+    fullName: '',
+    title: 'Senior Architect', // Default placeholder (not in AuthContext yet)
+    email: '',
+    bio: 'Passionate about cloud architecture and scalable systems.' // Default placeholder
   });
 
-  // 2. Notification State
+  // 4. Sync State with User Context when component loads
+  useEffect(() => {
+    if (user) {
+      setProfile((prev) => ({
+        ...prev,
+        fullName: user.name || '',
+        email: user.email || '',
+        // If you add title/bio to your AuthContext later, map them here
+      }));
+    }
+  }, [user]);
+
+  // Notification State
   const [notifications, setNotifications] = useState({
     emailAlerts: true,
     pushNotifs: true,
@@ -23,7 +38,7 @@ const SettingsPage = () => {
     reviewUpdates: true
   });
 
-  // 3. Security State
+  // Security State
   const [security, setSecurity] = useState({
     twoFactor: true,
     sessionTimeout: false
@@ -42,6 +57,7 @@ const SettingsPage = () => {
   };
 
   const handleSave = () => {
+    // In a real app, you would call an API here to update the user in the database
     setTimeout(() => {
         triggerSnackbar("Settings saved successfully!");
     }, 500);
@@ -50,6 +66,12 @@ const SettingsPage = () => {
   const triggerSnackbar = (msg) => {
     setSnackbar({ show: true, message: msg });
     setTimeout(() => setSnackbar({ show: false, message: '' }), 3000);
+  };
+
+  // Helper to get initials for Avatar
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
   };
 
   return (
@@ -97,7 +119,10 @@ const SettingsPage = () => {
                     </div>
 
                     <div className="profile-header">
-                        <div className="profile-avatar-large">PB</div>
+                        {/* Dynamic Avatar Initials */}
+                        <div className="profile-avatar-large">
+                            {getInitials(profile.fullName)}
+                        </div>
                         <div>
                             <button className="btn-upload">Change Avatar</button>
                             <p style={{fontSize:'0.75rem', color:'#64748b', marginTop:'8px'}}>JPG, GIF or PNG. 1MB Max.</p>
@@ -129,7 +154,9 @@ const SettingsPage = () => {
                                 className="form-input" 
                                 name="email"
                                 value={profile.email} 
-                                onChange={handleProfileChange}
+                                // Ideally email should be read-only or require re-auth to change
+                                readOnly 
+                                style={{ opacity: 0.7, cursor: 'not-allowed' }}
                             />
                         </div>
                         <div className="form-group full-width">

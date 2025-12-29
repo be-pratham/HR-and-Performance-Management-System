@@ -10,18 +10,18 @@ import { ROLES } from './navigation';
 // Features
 import LoginPage from '../features/login/LoginPage';
 import DashboardPage from '../features/dashboard/DashboardPage';
-import TeamApprovals from '../features/approvals/TeamApprovals';
+// import TeamApprovals from '../features/approvals/TeamApprovals'; // Disabled: operational approvals (leaves)
 import GoalPage from '../features/goals/GoalPage';
 import FeedbackPage from '../features/feedback/FeedbackPage';
-import LearningPage from '../features/learning/LearningPage';
+// import LearningPage from '../features/learning/LearningPage';
 import SettingsPage from '../features/settings/SettingsPage';
-import LeavePage from '../features/leaves/LeavePage';
+// import LeavePage from '../features/leaves/LeavePage'; // Disabled: HRMS feature
 import ReviewsPage from '../features/reviews/ReviewsPage';
-import EmployeesPage from '../features/employees/EmployeeList';
-import AttendancePage from '../features/attendance/AttendancePage';
-import AnnouncementsPage from '../features/announcements/AnnouncementPage';
-import AnnouncementViewPage from '../features/announcements/ViewAnnouncement';
-import PolicyPage from '../features/policy/policy';
+import EmployeesPage from '../features/employees/EmployeeList'; // Kept: Needed to manage users/assignments
+// import AttendancePage from '../features/attendance/AttendancePage'; // Disabled: HRMS feature
+// import AnnouncementsPage from '../features/announcements/AnnouncementPage'; // Disabled: HRMS feature
+// import AnnouncementViewPage from '../features/announcements/ViewAnnouncement'; // Disabled: HRMS feature
+// import PolicyPage from '../features/policy/policy'; // Disabled: HRMS feature
 
 // 404 Component (Styled for Dark Mode)
 const NotFound = () => (
@@ -70,32 +70,32 @@ const AppRoutes = () => {
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<DashboardPage />} />  
           <Route path="/settings" element={<SettingsPage />} /> 
-          <Route path="/announcements/:id" element={<AnnouncementViewPage />} />    
+          {/* <Route path="/announcements/:id" element={<AnnouncementViewPage />} /> */}     
         </Route>
 
         {/* Manager & Employee Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.EMPLOYEE, ROLES.MANAGER]} />}>
-          <Route path="/leavepage" element={<LeavePage />} />
+          {/* <Route path="/leavepage" element={<LeavePage />} /> */}
           <Route path="/reviews" element={<ReviewsPage />} /> 
           <Route path="/goals" element={<GoalPage />} />
           <Route path="/feedback" element={<FeedbackPage />} />
-          <Route path="/learning" element={<LearningPage />} />  
+          {/* <Route path="/learning" element={<LearningPage />} />   */}
         </Route>
         {/* Manager Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.MANAGER]} />}>
-          <Route path="/approvals" element={<TeamApprovals />} />
+          {/* <Route path="/approvals" element={<TeamApprovals />} /> */}
         </Route>
         {/* Admin Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
-          <Route path="/announcements" element={<AnnouncementsPage />} />
-          <Route path="/attendance" element={<AttendancePage />} />
+          {/* <Route path="/announcements" element={<AnnouncementsPage />} /> */}
+          {/* <Route path="/attendance" element={<AttendancePage />} /> */}
           <Route path="/employees" element={<EmployeesPage />} />
-          <Route path="/policies" element={<PolicyPage />} />
+          {/* <Route path="/policies" element={<PolicyPage />} /> */}
         </Route>
 
         {/*Need to update as pages are made*/}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
-          <Route path="/compensation" element={<SettingsPage />} />
+          {/* <Route path="/compensation" element={<SettingsPage />} /> */}
         </Route>
 
         <Route path="*" element={<NotFound />} />
