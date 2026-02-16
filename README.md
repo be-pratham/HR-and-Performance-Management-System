@@ -1,16 +1,26 @@
-# React + Vite
+# HR & Performance Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive HR solution designed to manage organizational health through data-driven performance metrics and secure access control.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **360-Degree Feedback Mechanism:** Enables holistic performance evaluations by collecting feedback from all directions—supervisors, peers, and direct reports.
+* **Role-Based Access Control (RBAC):** Tiered permission system to ensure data security and privacy:
+    * **Admin:** Full system configuration, user management, and global reporting.
+    * **Manager:** Team oversight, performance review approvals, and department analytics.
+    * **Employee:** Self-service portal for feedback submission, goal tracking, and profile management.
+* **Performance Analytics:** Automated calculation of performance scores based on multi-source feedback.
+* **Secure Authentication:** Integrated login system tailored to user roles.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Frontend:** React.js, HTML, CSS
 
-## Expanding the ESLint configuration
+## 📋 Installation & Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/be-pratham/HR-and-Performance-Management-System.git](https://github.com/be-pratham/HR-and-Performance-Management-System.git)
+
+   
+**Developed by @be-pratham**
