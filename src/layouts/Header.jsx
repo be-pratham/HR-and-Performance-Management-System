@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Search, Bell, ChevronDown, LogOut, Settings, Trash2, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // 1. Import Auth Context
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 const Header = ({ onSearch }) => {
   const navigate = useNavigate();
-  const { logout, user } = useAuth(); // 2. Get logout function and user data
+  const { logout, user } = useAuth();
 
   const initialNotifications = [
     { id: 1, text: "New goal assigned by HR", time: "2m ago" },
@@ -48,8 +48,8 @@ const Header = ({ onSearch }) => {
 
   // 3. The Logout Handler
   const handleLogout = () => {
-    logout();             // Clear auth state
-    navigate('/login');   // Redirect to login page
+    logout();
+    navigate('/login');
   };
 
   return (
@@ -72,7 +72,6 @@ const Header = ({ onSearch }) => {
             {hasUnread && <span className="notification-dot"></span>}
           </button>
           
-          {/* Notification Dropdown */}
           {showNotifications && (
             <div className="dropdown-menu notifications-dropdown">
               <div className="dropdown-header">
@@ -115,15 +114,12 @@ const Header = ({ onSearch }) => {
           )}
         </div>
         
-        {/* User Profile Section */}
         <div className="action-wrapper">
           <div className="user-profile" onClick={toggleProfile}>
             <div className="avatar">
-                {/* Show first initial of user name or 'U' */}
                 {user?.name ? user.name.charAt(0) : 'U'}
             </div>
             <div className="user-info">
-              {/* 4. Display Real User Data */}
               <span className="name">{user?.name || 'User'}</span>
               <span className="role">{user?.role || 'Employee'}</span>
             </div>
@@ -143,7 +139,6 @@ const Header = ({ onSearch }) => {
               </div>
               <div className="dropdown-divider"></div>
               
-              {/* 5. Attach the Logout Handler here */}
               <div className="dropdown-item danger" onClick={handleLogout}>
                 <LogOut size={16} /> <span>Logout</span>
               </div>

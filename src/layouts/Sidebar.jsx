@@ -17,49 +17,15 @@ const Sidebar = () => {
       path: '/dashboard', 
       icon: LayoutDashboard, 
       label: 'Dashboard',
-      // No roles defined = visible to everyone
     },
 
-    // --- Admin & Manager Only ---
-    // { 
-    //   path: '/approvals', 
-    //   icon: ClipboardCheck, 
-    //   label: 'Team Approvals', 
-    //   allowedRoles: ['manager'] 
-    // },
-
-    // --- Admin Specific (Routes defined at bottom of AppRoutes) ---
     { 
       path: '/employees', 
       icon: Users, 
       label: 'Employees', 
       allowedRoles: ['admin'] 
     },
-    // { 
-    //   path: '/attendance', 
-    //   icon: Clock, 
-    //   label: 'Attendance', 
-    //   allowedRoles: ['admin'] 
-    // },
-    // { 
-    //   path: '/compensation', 
-    //   icon: DollarSign, 
-    //   label: 'Compensation', 
-    //   allowedRoles: ['admin'] 
-    // },
-    // { 
-    //   path: '/announcements', 
-    //   icon: Megaphone, 
-    //   label: 'Announcements', 
-    //   allowedRoles: ['admin'] 
-    // },
-    // { 
-    //   path: '/policies', 
-    //   icon: Book, 
-    //   label: 'Policies', 
-    //   allowedRoles: ['admin'] 
-    // },
-
+    
     // --- Employee & Manager Specific ---
     { 
       path: '/goals', 
@@ -73,40 +39,23 @@ const Sidebar = () => {
       label: 'Performance', 
       allowedRoles: ['employee', 'manager'] 
     },
-    // { 
-    //   path: '/leavepage', 
-    //   icon: Calendar, 
-    //   label: 'Leaves', 
-    //   allowedRoles: ['employee', 'manager'] 
-    // },
+
     { 
       path: '/feedback', 
       icon: MessageSquare, 
       label: 'Feedback', 
       allowedRoles: ['employee', 'manager'] 
     },
-    // { 
-    //   path: '/learning', 
-    //   icon: GraduationCap, 
-    //   label: 'Learning', 
-    //   allowedRoles: ['employee', 'manager'] 
-    // },
-
-    // --- Common Settings ---
     { 
       path: '/settings', 
       icon: Settings, 
       label: 'Settings',
-      // Visible to all roles per AppRoutes
     },
   ];
 
-  // Filter items based on the user's role
   const visibleItems = allMenuItems.filter((item) => {
-    // If no specific roles defined, show to everyone
     if (!item.allowedRoles) return true;
     
-    // Check if user's role is included in the allowed list
     return item.allowedRoles.includes(user?.role);
   });
 
@@ -114,8 +63,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-logo">
         <div className="logo-circle"></div>
-        {/* Updated Title */}
-        <h2>HR and PMS</h2>
+        <h2>HRMS</h2>
       </div>
 
       <nav className="sidebar-menu">

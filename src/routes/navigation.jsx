@@ -1,9 +1,8 @@
-// src/routes/navigation.jsx
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // For Approvals
-import TrackChangesIcon from '@mui/icons-material/TrackChanges'; // For Goals
-import RateReviewIcon from '@mui/icons-material/RateReview'; // For Feedback
-import SchoolIcon from '@mui/icons-material/School'; // For Learning
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import TrackChangesIcon from '@mui/icons-material/TrackChanges';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+import SchoolIcon from '@mui/icons-material/School';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 export const ROLES = {
@@ -29,7 +28,7 @@ export const navConfig = [
     title: 'Team Approvals',
     path: '/approvals',
     icon: <CheckCircleIcon />,
-    allowedRoles: [ROLES.ADMIN, ROLES.MANAGER], // Managers/Admins only
+    allowedRoles: [ROLES.ADMIN, ROLES.MANAGER],
   },
   {
     title: 'Feedback & Reviews',
@@ -47,6 +46,6 @@ export const navConfig = [
     title: 'Settings',
     path: '/settings',
     icon: <SettingsIcon />,
-    allowedRoles: [ROLES.ADMIN], // Admin only
+    allowedRoles: [ROLES.ADMIN],
   },
 ];

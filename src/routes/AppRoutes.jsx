@@ -1,29 +1,16 @@
 import React from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
-
-// Layouts
 import Header from '../layouts/Header';
 import Sidebar from '../layouts/Sidebar';
 import ProtectedRoute from './ProtectedRoute';
 import { ROLES } from './navigation';
-
-// Features
 import LoginPage from '../features/login/LoginPage';
 import DashboardPage from '../features/dashboard/DashboardPage';
-// import TeamApprovals from '../features/approvals/TeamApprovals'; // Disabled: operational approvals (leaves)
 import GoalPage from '../features/goals/GoalPage';
 import FeedbackPage from '../features/feedback/FeedbackPage';
-// import LearningPage from '../features/learning/LearningPage';
 import SettingsPage from '../features/settings/SettingsPage';
-// import LeavePage from '../features/leaves/LeavePage'; // Disabled: HRMS feature
 import ReviewsPage from '../features/reviews/ReviewsPage';
-import EmployeesPage from '../features/employees/EmployeeList'; // Kept: Needed to manage users/assignments
-// import AttendancePage from '../features/attendance/AttendancePage'; // Disabled: HRMS feature
-// import AnnouncementsPage from '../features/announcements/AnnouncementPage'; // Disabled: HRMS feature
-// import AnnouncementViewPage from '../features/announcements/ViewAnnouncement'; // Disabled: HRMS feature
-// import PolicyPage from '../features/policy/policy'; // Disabled: HRMS feature
-
-// 404 Component (Styled for Dark Mode)
+import EmployeesPage from '../features/employees/EmployeeList';
 const NotFound = () => (
   <div style={{ textAlign: 'center', marginTop: '50px', color: '#fff' }}>
     <h1>404 - Page Not Found</h1>
@@ -32,26 +19,18 @@ const NotFound = () => (
   </div>
 );
 
-// --- FIX IS HERE: MainLayout Styles for DARK MODE ---
 const MainLayout = () => (
-  // 1. Set the outer container to a dark color to match your app theme
   <div className="app-container" style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', backgroundColor: '#0b1120', color: '#ffffff' }}>
-    
-    {/* Sidebar */}
     <div style={{ flexShrink: 0 }}> 
       <Sidebar />
     </div>
-
-    {/* Right Side: Header + Main Content */}
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
       
-      {/* HEADER WRAPPER: Removed 'backgroundColor: #ffffff' */}
       <div style={{ flexShrink: 0, zIndex: 10 }}>
         <Header />
       </div>
 
       {/* MAIN CONTENT: Removed 'backgroundColor: #f5f5f5' */}
-      {/* Added explicit text color so text doesn't disappear on dark bg */}
       <main style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
         <Outlet />
       </main>
@@ -93,14 +72,11 @@ const AppRoutes = () => {
           {/* <Route path="/policies" element={<PolicyPage />} /> */}
         </Route>
 
-        {/*Need to update as pages are made*/}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
           {/* <Route path="/compensation" element={<SettingsPage />} /> */}
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Route>
-
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   );

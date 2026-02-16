@@ -5,7 +5,7 @@ html, body, #root {
   overflow: hidden;
 }
 
-/* 1. LAYOUT WRAPPER: Puts Sidebar (left) and Main (right) side-by-side */
+/* 1. LAYOUT WRAPPER: Puts Sidebar (left) and Main (right) */
 .app-layout {
   display: flex !important;
   height: 100vh;
@@ -13,7 +13,7 @@ html, body, #root {
   background-color: #0f172a;
 }
 
-/* 2. SIDEBAR: Fixed width, dark color */
+/* 2. SIDEBAR*/
 .app-sidebar {
   width: 260px;
   min-width: 260px;       
@@ -25,7 +25,7 @@ html, body, #root {
   flex-direction: column;
 }
 
-/* 3. MAIN AREA: Grows to fill the rest of the screen */
+/* 3. MAIN AREA*/
 .app-main {
   flex-grow: 1;
   display: flex;
@@ -35,7 +35,7 @@ html, body, #root {
   overflow: hidden;
 }
 
-/* 4. HEADER: Fixed at the top */
+/* 4. HEADER*/
 .app-header {
   height: 64px;
   background-color: #1e293b;
@@ -46,7 +46,7 @@ html, body, #root {
   padding: 0 24px;
 }
 
-/* 5. CONTENT: The only part that scrolls */
+/* 5. CONTENT*/
 .app-content {
   flex-grow: 1;
   overflow-y: auto;

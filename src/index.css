@@ -1,23 +1,22 @@
 /* src/index.css */
 :root {
-  --bg-dark: #0B1120;       /* Deepest background (Main) */
-  --bg-card: #151e32;       /* Component background (Sidebar, Cards) */
+  --bg-dark: #0B1120;
+  --bg-card: #151e32;
   --text-main: #ffffff;
   --text-muted: #94a3b8;
-  --accent-blue: #3b82f6;   /* The bright blue */
+  --accent-blue: #3b82f6;
   --border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* Classes must be OUTSIDE of :root */
-.badge-green { 
-  background: rgba(16, 185, 129, 0.2); 
-  color: #10b981; 
-  padding: 4px 8px; 
-  border-radius: 12px; 
-  font-size: 0.75rem; 
+.badge-green {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
 }
 
-.badge-muted { 
+.badge-muted {
   background: rgba(148, 163, 184, 0.2); 
   color: #94a3b8; 
   padding: 4px 8px; 
