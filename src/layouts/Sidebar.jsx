@@ -10,8 +10,8 @@ const Sidebar = () => {
   
   const { user } = useAuth(); 
 
-  // Defined based on AppRoutes.js structure
   const allMenuItems = [
+
     // --- Common ---
     { 
       path: '/dashboard', 
@@ -115,7 +115,7 @@ const Sidebar = () => {
       <div className="sidebar-logo">
         <div className="logo-circle"></div>
         {/* Updated Title */}
-        <h2>Navajna PMS</h2>
+        <h2>HR and PMS</h2>
       </div>
 
       <nav className="sidebar-menu">
