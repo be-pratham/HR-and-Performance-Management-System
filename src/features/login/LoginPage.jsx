@@ -52,7 +52,7 @@ const LoginPage = () => {
         
         <Box className="login-header">
           <div className="logo-circle"></div>
-          <Typography variant="h4" className="login-title">Navajna HRMS</Typography>
+          <Typography variant="h4" className="login-title">Welcome to HRMS</Typography>
           <Typography variant="body2" className="login-subtitle">Sign in to continue</Typography>
         </Box>
 
