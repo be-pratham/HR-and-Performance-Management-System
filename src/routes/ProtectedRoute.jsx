@@ -1,23 +1,36 @@
-// src/components/ProtectedRoute.jsx
-import React, { useContext } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
+import React from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Box, CircularProgress } from '@mui/material';
+
 const ProtectedRoute = ({ allowedRoles }) => {
-  const { user, loading } = useContext(AuthContext);
+  // 1. Grab auth state from Redux
+  const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
+  const location = useLocation();
 
+  // 2. Handle the "Bootstrapping" state
+  // If the app is still checking localStorage on refresh, show a loader
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
-  if (!user) {
-    return <Navigate to="/login" replace />;
+  // 3. If not logged in, redirect to login
+  // We save the 'from' location so we can redirect them back after they log in
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // 4. Role-Based Access Control (RBAC) check
   if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // User is logged in but doesn't have permission (e.g., Employee trying to access Admin Settings)
-    return <Navigate to="/unauthorized" replace />;
+    // Redirect to a neutral page (like dashboard) if they aren't authorized for this specific route
+    return <Navigate to="/dashboard" replace />;
   }
-  // 3. If all checks pass, render the child routes
+
+  // 5. If all checks pass, render the child routes (Outlet)
   return <Outlet />;
 };
 

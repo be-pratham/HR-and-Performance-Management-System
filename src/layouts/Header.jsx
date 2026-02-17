@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Search, Bell, ChevronDown, LogOut, Settings, Trash2, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux'; // Redux Hooks
+import { logout } from '../store/reducers/authSlice';
 import './Header.css';
 
 const Header = ({ onSearch }) => {
   const navigate = useNavigate();
-  const { logout, user } = useAuth();
+  const dispatch = useDispatch();
+  
+  // Get user from Redux
+  const { user } = useSelector((state) => state.auth);
 
   const initialNotifications = [
     { id: 1, text: "New goal assigned by HR", time: "2m ago" },
@@ -46,10 +50,10 @@ const Header = ({ onSearch }) => {
     setHasUnread(false); 
   };
 
-  // 3. The Logout Handler
+  // UPDATED: The Logout Handler now uses Redux
   const handleLogout = () => {
-    logout();
-    navigate('/login');
+    dispatch(logout()); // 1. Clear Redux + LocalStorage
+    navigate('/login', { replace: true }); // 2. Force move to login
   };
 
   return (
@@ -65,7 +69,6 @@ const Header = ({ onSearch }) => {
       </div>
 
       <div className="header-actions">
-        
         <div className="action-wrapper">
           <button className="icon-btn" onClick={toggleNotifications}>
             <Bell size={20} />
@@ -78,18 +81,10 @@ const Header = ({ onSearch }) => {
                 <span>Notifications</span>
                 {notifications.length > 0 && (
                   <div className="header-tools">
-                    <button 
-                      className="tool-btn" 
-                      title="Mark all as read" 
-                      onClick={markAllRead}
-                    >
+                    <button className="tool-btn" title="Mark all as read" onClick={markAllRead}>
                       <CheckCheck size={14} />
                     </button>
-                    <button 
-                      className="tool-btn danger" 
-                      title="Clear notifications" 
-                      onClick={clearNotifications}
-                    >
+                    <button className="tool-btn danger" title="Clear notifications" onClick={clearNotifications}>
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -105,9 +100,7 @@ const Header = ({ onSearch }) => {
                     </div>
                   ))
                 ) : (
-                  <div className="empty-state">
-                    No new notifications
-                  </div>
+                  <div className="empty-state">No new notifications</div>
                 )}
               </div>
             </div>

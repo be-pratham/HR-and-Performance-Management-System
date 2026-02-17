@@ -1,32 +1,28 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Target, FileText, MessageSquare, GraduationCap, Settings, Users, ClipboardCheck, Calendar, Clock, DollarSign, Megaphone, Book } from 'lucide-react';
-import { useAuth } from '../context/AuthContext'; 
+import { useSelector } from 'react-redux'; // Redux Hook
+import { LayoutDashboard, Target, FileText, MessageSquare, Settings, Users } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const { user } = useAuth(); 
+  // Get user from Redux
+  const { user } = useSelector((state) => state.auth); 
 
   const allMenuItems = [
-
-    // --- Common ---
     { 
       path: '/dashboard', 
       icon: LayoutDashboard, 
       label: 'Dashboard',
     },
-
     { 
       path: '/employees', 
       icon: Users, 
       label: 'Employees', 
       allowedRoles: ['admin'] 
     },
-    
-    // --- Employee & Manager Specific ---
     { 
       path: '/goals', 
       icon: Target, 
@@ -39,7 +35,6 @@ const Sidebar = () => {
       label: 'Performance', 
       allowedRoles: ['employee', 'manager'] 
     },
-
     { 
       path: '/feedback', 
       icon: MessageSquare, 
@@ -53,10 +48,10 @@ const Sidebar = () => {
     },
   ];
 
+  // Filter items based on the Redux user role
   const visibleItems = allMenuItems.filter((item) => {
     if (!item.allowedRoles) return true;
-    
-    return item.allowedRoles.includes(user?.role);
+    return item.allowedRoles.includes(user?.role?.toLowerCase());
   });
 
   return (

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { Box, Paper, Typography, TextField, Button, Alert, InputAdornment } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, clearError } from '../../store/reducers/authSlice'; // Path to your new slice
+import { Box, Paper, Typography, TextField, Button, Alert, InputAdornment, CircularProgress } from '@mui/material';
 import { Lock, Mail } from 'lucide-react';
 
 // Import the CSS file
@@ -10,23 +11,38 @@ import './LoginPage.css';
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   
-  const { login } = useAuth();
+  // 1. Hook into Redux state
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
+  // 2. Clear previous errors when the user starts typing again
+  useEffect(() => {
+    if (error) {
+      dispatch(clearError());
+    }
+  }, [email, password, dispatch]);
 
-    const result = login(email, password);
-
-    if (result.success) {
-      // FIX: Always navigate to /dashboard.
-      // The DashboardPage component will detect the role and show the correct view.
+  // 3. Redirect if already authenticated (e.g., on page refresh)
+  useEffect(() => {
+    if (isAuthenticated) {
       navigate('/dashboard');
-    } else {
-      setError(result.message);
+    }
+  }, [isAuthenticated, navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    // 4. Dispatch the async thunk
+    try {
+      await dispatch(loginUser({ email, password })).unwrap();
+      // If unwrap succeeds, the useEffect above will handle navigation, 
+      // or you can navigate here:
+      navigate('/dashboard');
+    } catch (err) {
+      // Errors are handled by the slice and accessible via useSelector
+      console.error("Login failed: ", err);
     }
   };
 
@@ -40,6 +56,7 @@ const LoginPage = () => {
           <Typography variant="body2" className="login-subtitle">Sign in to continue</Typography>
         </Box>
 
+        {/* 5. Display Redux error */}
         {error && (
           <Alert severity="error" className="login-alert">
             {error}
@@ -55,6 +72,7 @@ const LoginPage = () => {
             className="login-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -73,6 +91,7 @@ const LoginPage = () => {
             className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -88,8 +107,9 @@ const LoginPage = () => {
             variant="contained" 
             size="large" 
             className="login-button"
+            disabled={loading} // 6. Disable button while loading
           >
-            Sign In
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
           </Button>
 
           {/* Helper Text for Demo */}

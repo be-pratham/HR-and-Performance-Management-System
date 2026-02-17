@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useSelector } from 'react-redux'; // 1. Use Redux hooks
 import { Box, CircularProgress, Typography } from '@mui/material';
 
 // Import the Child Views
@@ -8,9 +8,10 @@ import EmployeeDashboard from './components/EmployeeDashboard';
 import AdminDashboard from './components/AdminDashboard';
 
 const DashboardPage = () => {
-  const { user, loading } = useAuth();
+  // 2. Grab auth state from Redux
+  const { user, loading } = useSelector((state) => state.auth);
 
-  // 1. Loading State
+  // 3. Loading State
   if (loading) {
     return (
       <Box sx={{ 
@@ -27,18 +28,13 @@ const DashboardPage = () => {
     );
   }
 
-  // 2. Safety Check: If no user is found
-  if (!user) {
-    return (
-      <Box sx={{ p: 4, textAlign: 'center' }}>
-        <Typography color="error" variant="h6">Authentication Error</Typography>
-        <Typography sx={{ color: 'var(--text-secondary)' }}>Please log in again to access your dashboard.</Typography>
-      </Box>
-    );
-  }
+  // 4. Clean Switch Logic
+  // We no longer need the "if (!user)" block here because 
+  // ProtectedRoute handles that. If we are here, user exists.
+  
+  const userRole = user?.role?.toLowerCase();
 
-  // 3. The Switch Logic
-  switch (user.role?.toLowerCase()) {
+  switch (userRole) {
     case 'admin':
     case 'hr':
       return <AdminDashboard />;
@@ -51,7 +47,6 @@ const DashboardPage = () => {
       return <EmployeeDashboard />;
       
     default:
-      // Fallback for unknown or missing roles
       return (
         <Box sx={{ 
           p: 6, 
@@ -65,11 +60,11 @@ const DashboardPage = () => {
             Access Restricted
           </Typography>
           <Typography sx={{ color: 'var(--text-secondary)' }}>
-            Your account role <strong>({user.role || 'None'})</strong> does not have a dashboard assigned. 
-            Please contact IT Support.
+            Your account role <strong>({user?.role || 'None'})</strong> does not have a dashboard assigned. 
           </Typography>
         </Box>
       );
   }
 };
+
 export default DashboardPage;
