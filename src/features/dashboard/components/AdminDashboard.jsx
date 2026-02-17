@@ -1,50 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Users, UserPlus, Briefcase, FileSearch, 
-  TrendingUp, Search, Filter, MoreVertical, 
-  Download, Mail, ShieldCheck, Sun, ExternalLink, ArrowRight 
-} from 'lucide-react';
-import { 
-  Button, Snackbar, Alert, Table, TableBody, 
-  TableCell, TableContainer, TableHead, TableRow, 
-  Chip 
-} from '@mui/material';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {Users, UserPlus, Briefcase, FileSearch, TrendingUp, Search, MoreVertical, Mail, ShieldCheck, Sun, ExternalLink, ArrowRight, Trash2, Edit } from 'lucide-react';
+import { Button, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
-import './DashboardStyles.css';
+import { addEmployee, deleteEmployee, updateEmployee, setSearchTerm, selectFilteredEmployees } from '../../../store/reducers/employeeSlice';
 
 const AdminDashboard = () => {
-  const { user } = useAuth();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  const today = new Date().toLocaleDateString('en-US', { 
-    weekday: 'long', month: 'long', day: 'numeric' 
-  });
+  // 1. Redux Selectors
+  const employees = useSelector(selectFilteredEmployees);
+  const { searchTerm } = useSelector((state) => state.employees);
+  const { user } = useSelector((state) => state.auth);
 
-  // HR Specific Stats
+  // 2. Local UI State
+  const [open, setOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({ id: '', name: '', role: '', dept: '', email: '', status: 'Active' });
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'info' });
+
+  // 3. Dynamic Stats Calculation (shows off Redux power)
   const hrStats = [
-    { id: 1, label: "Total Employees", value: "156", icon: Users, color: "blue" },
-    { id: 2, label: "Working from Home", value: "5", icon: Briefcase, color: "purple" },
-    { id: 3, label: "Working from Office", value: "20", icon: UserPlus, color: "green" },
-    { id: 4, label: "On Leave", value: "2", icon: ShieldCheck, color: "orange" }
+    { id: 1, label: "Total Employees", value: employees.length, icon: Users, color: "blue" },
+    { id: 2, label: "Active", value: employees.filter(e => e.status === 'Active').length, icon: Briefcase, color: "green" },
+    { id: 3, label: "On Leave", value: employees.filter(e => e.status === 'On Leave').length, icon: ShieldCheck, color: "orange" },
+    { id: 4, label: "Probation", value: employees.filter(e => e.status === 'Probation').length, icon: UserPlus, color: "purple" }
   ];
 
-  const [employees, setEmployees] = useState([]);
-  const [snackbar, setSnackbar] = useState({ open: false, message: '' });
-
-  useEffect(() => {
-    const localData = JSON.parse(localStorage.getItem('company_employees') || '[]');
-    if (localData.length > 0) {
-      setEmployees(localData.slice(-4).reverse());
+  // 4. Handlers
+  const handleOpen = (emp = null) => {
+    if (emp) {
+      setFormData(emp);
+      setIsEditing(true);
     } else {
-      setEmployees([
-        { id: 'EMP001', name: "Sarah Chen", role: "Sr. Engineer", dept: "Engineering", status: "Active", email: "s.chen@company.com" },
-        { id: 'EMP002', name: "Rajesh Ramasamy", role: "Product Manager", dept: "Product", status: "On Leave", email: "r.ram@company.com" },
-        { id: 'EMP003', name: "Jessica Pearson", role: "Managing Partner", dept: "Legal", status: "Active", email: "j.pearson@company.com" },
-        { id: 'EMP004', name: "Mike Ross", role: "Associate", dept: "Legal", status: "Probation", email: "m.ross@company.com" },
-      ]);
+      setFormData({ id: '', name: '', role: '', dept: '', email: '', status: 'Active' });
+      setIsEditing(false);
     }
-  }, []);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const handleSubmit = () => {
+    if (isEditing) {
+      dispatch(updateEmployee(formData));
+      setSnackbar({ open: true, message: 'Employee updated successfully!', severity: 'success' });
+    } else {
+      dispatch(addEmployee(formData));
+      setSnackbar({ open: true, message: 'New employee added!', severity: 'success' });
+    }
+    handleClose();
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteEmployee(id));
+    setSnackbar({ open: true, message: 'Employee removed.', severity: 'error' });
+  };
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -57,7 +69,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      {/* 1. HEADER */}
+      {/* HEADER */}
       <div className="dashboard-header">
         <div>
           <h1 className="dashboard-title">HR Management Portal</h1>
@@ -65,17 +77,15 @@ const AdminDashboard = () => {
         </div>
         <div className="header-date-pill">
           <Sun size={18} className="sun-icon" />
-          <span>{today}</span>
+          <span>{new Date().toLocaleDateString()}</span>
         </div>
       </div>
 
-      {/* 2. RESPONSIVE SINGLE LINE STATS */}
+      {/* STATS ROW */}
       <div className="admin-stats-row">
         {hrStats.map((stat) => (
           <div key={stat.id} className={`stat-card-compact ${stat.color}`}>
-            <div className="stat-icon-wrapper-sm">
-              <stat.icon size={20} />
-            </div>
+            <div className="stat-icon-wrapper-sm"><stat.icon size={20} /></div>
             <div className="stat-stack">
               <div className="stat-val-sm">{stat.value}</div>
               <div className="stat-label-sm">{stat.label}</div>
@@ -84,31 +94,31 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* 3. RECENTLY ADDED DIRECTORY */}
+      {/* DIRECTORY SURFACE */}
       <div className="dashboard-surface">
         <div className="surface-title">
           <div className="title-group">
-            <h3>Recently Added Employees</h3>
-            <span className="badge-count">Latest Entries</span>
+            <h3>Employee Directory</h3>
+            <TextField 
+              size="small" 
+              placeholder="Search..." 
+              value={searchTerm}
+              onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+              InputProps={{ startAdornment: <Search size={16} style={{marginRight: 8}} /> }}
+            />
           </div>
-          <div className="action-group">
-             <Button variant="outlined" endIcon={<ExternalLink size={16} />} onClick={() => navigate('/directory')}>
-               Open Full Directory
-             </Button>
-             <Button variant="contained" startIcon={<UserPlus size={16} />} onClick={() => navigate('/add-employee')}>
-               Add Employee
-             </Button>
-          </div>
+          <Button variant="contained" startIcon={<UserPlus size={16} />} onClick={() => handleOpen()}>
+            Add Employee
+          </Button>
         </div>
 
         <TableContainer>
           <Table>
-            <TableHead className="table-header-row">
+            <TableHead>
               <TableRow>
                 <TableCell>Employee</TableCell>
                 <TableCell>Department</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Email</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
             </TableHead>
@@ -117,26 +127,21 @@ const AdminDashboard = () => {
                 <TableRow key={emp.id} hover>
                   <TableCell>
                     <div className="employee-name">{emp.name}</div>
-                    <div className="employee-email">{emp.id} • {emp.role}</div>
+                    <div className="employee-email">{emp.role} • {emp.email}</div>
                   </TableCell>
                   <TableCell>{emp.dept}</TableCell>
                   <TableCell>
-                    <Chip 
-                      label={emp.status} 
-                      color={getStatusColor(emp.status)} 
-                      size="small" 
-                    />
+                    <Chip label={emp.status} color={getStatusColor(emp.status)} size="small" />
                   </TableCell>
-                  <TableCell>{emp.email}</TableCell>
                   <TableCell align="right">
-                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
-                      <button className="icon-btn-subtle" onClick={() => setSnackbar({open: true, message: `Email draft created for ${emp.name}`})}>
-                        <Mail size={18} color="var(--text-secondary)" />
+                    <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+                      <button className="icon-btn-subtle" onClick={() => handleOpen(emp)}>
+                        <Edit size={18} color="var(--brand-blue)" />
                       </button>
-                      <button className="icon-btn-subtle">
-                        <MoreVertical size={18} color="var(--text-secondary)" />
+                      <button className="icon-btn-subtle" onClick={() => handleDelete(emp.id)}>
+                        <Trash2 size={18} color="#f44336" />
                       </button>
-                    </div>
+                    </Box>
                   </TableCell>
                 </TableRow>
               ))}
@@ -145,53 +150,25 @@ const AdminDashboard = () => {
         </TableContainer>
       </div>
 
-      {/* 4. SECONDARY LAYOUT */}
-      <div className="dashboard-split-layout" style={{ marginTop: '24px' }}>
-        <div className="dashboard-surface">
-          <div className="surface-title">
-            <h3>Recent Policy Updates</h3>
-            <TrendingUp size={20} color="var(--brand-blue)" />
-          </div>
-          <div className="announcement-list">
-            <div className="announcement-item-mini">
-              <div className="dot blue"></div>
-              <div className="announce-content-mini">
-                <h4>2026 Benefits Guide</h4>
-                <p>New health insurance premiums updated.</p>
-              </div>
-              <ArrowRight size={16} className="arrow" />
-            </div>
-            <div className="announcement-item-mini">
-              <div className="dot orange"></div>
-              <div className="announce-content-mini">
-                <h4>Remote Work Addendum</h4>
-                <p>Revised guidelines for tax compliance.</p>
-              </div>
-              <ArrowRight size={16} className="arrow" />
-            </div>
-          </div>
-        </div>
+      {/* ADD/EDIT DIALOG */}
+      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
+        <DialogTitle>{isEditing ? 'Edit Employee' : 'Add New Employee'}</DialogTitle>
+        <DialogContent dividers>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
+            <TextField label="Full Name" fullWidth value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+            <TextField label="Role" fullWidth value={formData.role} onChange={(e) => setFormData({...formData, role: e.target.value})} />
+            <TextField label="Department" fullWidth value={formData.dept} onChange={(e) => setFormData({...formData, dept: e.target.value})} />
+            <TextField label="Email" fullWidth value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" onClick={handleSubmit}>Save Changes</Button>
+        </DialogActions>
+      </Dialog>
 
-        <div className="dashboard-surface">
-          <div className="surface-title">
-            <h3>Quick Actions</h3>
-            <FileSearch size={20} color="var(--text-secondary)" />
-          </div>
-          <div className="task-list">
-            <div className="task-item-simple" onClick={() => setSnackbar({open: true, message: 'Opening Payroll Portal...'})}>
-              <Briefcase size={18} />
-              <span className="task-text">Process Monthly Payroll</span>
-            </div>
-            <div className="task-item-simple" onClick={() => setSnackbar({open: true, message: 'Opening Reviews...'})}>
-              <FileSearch size={18} />
-              <span className="task-text">Review 14 Pending Appraisals</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <Snackbar open={snackbar.open} autoHideDuration={4000} onClose={() => setSnackbar({ ...snackbar, open: false })}>
-        <Alert severity="info" variant="filled">{snackbar.message}</Alert>
+      <Snackbar open={snackbar.open} autoHideDuration={3000} onClose={() => setSnackbar({ ...snackbar, open: false })}>
+        <Alert severity={snackbar.severity} variant="filled">{snackbar.message}</Alert>
       </Snackbar>
     </div>
   );

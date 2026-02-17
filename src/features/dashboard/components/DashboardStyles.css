@@ -51,6 +51,7 @@
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 /* --- HEADER ACTIONS (Attendance & Date) --- */
 .header-actions {
   display: flex;
@@ -99,6 +100,7 @@
 @keyframes spin {
   100% { transform: rotate(360deg); }
 }
+
 /* 2. REUSABLE HEADER COMPONENTS */
 .dashboard-header {
   margin-bottom: 32px;
@@ -182,7 +184,6 @@
   font-size: 1.8rem !important;
   font-weight: 700 !important;
   line-height: 1.2;
-  /* color: var(--text-primary); */
 }
 
 .stat-label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
@@ -255,7 +256,6 @@
 }
 .task-item.completed .task-checkbox { background-color: var(--brand-green); border-color: var(--brand-green); }
 .task-item.completed .task-text { text-decoration: line-through; color: var(--text-muted); }
-
 /* 6. MANAGER TABLE & FILTERS */
 .filter-toolbar { display: flex; gap: 20px; margin-bottom: 32px; align-items: center; }
 .search-field { width: 300px; transition: width 0.3s ease; }
@@ -273,8 +273,13 @@
 
 .MuiTableBody-root td {
   border-bottom: 1px solid var(--border-subtle) !important;
-  color: #e2e8f0 !important;
+  color: #ffffff !important; /* UPDATED: Changed from #e2e8f0 to white */
   padding: 16px !important;
+}
+
+/* Added specific targeting for all Table Cells */
+.MuiTableCell-root {
+  color: #ffffff !important;
 }
 
 .employee-name { color: var(--text-primary) !important; font-weight: 600 !important; }
@@ -286,16 +291,28 @@
 .MuiInputBase-input, 
 .MuiOutlinedInput-input, 
 .MuiSelect-select { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+
+/* Fix for Search bar background inside the dashboard surface */
+.dashboard-surface .MuiOutlinedInput-root { background-color: var(--bg-page) !important; border-radius: 8px !important; }
 .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, 0.3) !important; border-width: 1px !important; transition: border-color 0.2s; }
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, 0.6) !important; }
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: var(--brand-blue) !important; border-width: 2px !important; }
 .MuiInputLabel-root { color: var(--text-secondary) !important; }
 .MuiInputLabel-root.Mui-focused { color: var(--brand-blue) !important; }
 .MuiSelect-icon { color: var(--text-secondary) !important; }
-.MuiInputAdornment-root svg { color: var(--text-secondary) !important; }
-.MuiMenu-paper { background-color: var(--bg-card) !important; border: 1px solid var(--border-subtle); color: white !important; }
-.MuiMenuItem-root:hover { background-color: rgba(255,255,255,0.05) !important; }
-.MuiMenuItem-root.Mui-selected { background-color: var(--brand-blue-dim) !important; }
+.MuiInputAdornment-root svg { color: #ffffff !important; opacity: 1 !important; }
+.MuiInputBase-root svg { 
+  color: #ffffff !important; 
+  stroke: #ffffff !important;
+  opacity: 1 !important;
+}
+/* Fix for MUI Dialog Paper */
+.MuiDialog-paper { 
+  background-color: var(--bg-card) !important; 
+  color: white !important; 
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px !important;
+}
 
 /* 8. CHIPS & BUTTONS */
 .MuiChip-root { font-weight: 600 !important; border-radius: 6px !important; }
@@ -309,7 +326,26 @@
 .MuiButton-outlined:hover { background-color: rgba(255,255,255,0.05) !important; border-color: white !important; }
 .MuiChip-colorDefault {background-color: rgba(255, 255, 255, 0.1) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.1); }
 
-/* 9. MODALS & CUSTOM ELEMENTS */
+/* 9. MODALS & CUSTOM ELEMENTS - UPDATED FOR MUI DIALOG */
+.MuiDialogTitle-root {
+  background-color: var(--bg-card) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.MuiDialogContent-root {
+  background-color: var(--bg-card) !important;
+  padding: 24px !important;
+}
+
+.MuiDialogActions-root {
+  background-color: var(--bg-card) !important;
+  border-top: 1px solid var(--border-subtle);
+  padding: 16px 24px !important;
+}
+
+/* Preserving your custom modal classes as requested */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px);
@@ -329,12 +365,6 @@
 .form-group label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-size: 0.9rem; }
 .modal-input { width: 100%; padding: 12px; background: var(--bg-page); border: 1px solid var(--border-subtle); border-radius: 8px; color: white; outline: none; }
 .modal-input:focus { border-color: var(--brand-blue); }
-.dropdown-trigger-btn { width: 100%; padding: 12px; background-color: var(--bg-page); border: 1px solid var(--border-subtle); border-radius: 8px; color: white; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-.reviewer-dropdown-menu { position: absolute; width: 100%; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; margin-top: 5px; z-index: 100; }
-.reviewer-option { padding: 10px 15px; cursor: pointer; }
-.reviewer-option:hover { background: rgba(255,255,255,0.05); }
-.cancel-btn { padding: 8px 16px; background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); border-radius: 6px; cursor: pointer; }
-.submit-btn { padding: 8px 20px; background: var(--brand-blue); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
 
 /* --- ADMIN DASHBOARD ADDITIONS --- */
 
