@@ -1,4 +1,4 @@
-/* CENTRAL DASHBOARD STYLES (Unified for Employee, Manager, and Admin)*/
+/* CENTRAL DASHBOARD STYLES (Unified for Employee, Manager, and Admin) */
 
 /* 1. THEME VARIABLES & RESET */
 :root {
@@ -59,7 +59,6 @@
   gap: 16px;
 }
 
-/* Attendance Pill Container */
 .attendance-pill {
   display: flex;
   align-items: center;
@@ -72,34 +71,24 @@
 }
 
 .attendance-pill.active {
-  border-color: rgba(16, 185, 129, 0.4); /* Green tint border when active */
+  border-color: rgba(16, 185, 129, 0.4);
   background-color: rgba(16, 185, 129, 0.05);
 }
 
-/* Timer Display */
 .timer-display {
   display: flex;
   align-items: center;
   gap: 8px;
   padding-left: 8px;
-  color: var(--brand-green); /* Green text */
-  font-family: 'Monaco', 'Courier New', monospace; /* Monospaced for timer stability */
+  color: var(--brand-green);
+  font-family: 'Monaco', 'Courier New', monospace;
   font-weight: 700;
   font-size: 0.95rem;
 }
 
-.timer-icon {
-  color: var(--brand-green);
-}
-
-/* Optional: Spinning animation for the timer icon */
-.spinning {
-  animation: spin 4s linear infinite;
-}
-
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
+.timer-icon { color: var(--brand-green); }
+.spinning { animation: spin 4s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
 
 /* 2. REUSABLE HEADER COMPONENTS */
 .dashboard-header {
@@ -112,17 +101,17 @@
 }
 
 .dashboard-title {
-  font-size: 2rem !important;
-  font-weight: 700 !important;
-  margin: 0 !important;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
   color: var(--text-primary);
   line-height: 1.2;
 }
 
 .dashboard-subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem !important;
-  margin-top: 4px !important;
+  font-size: 0.95rem;
+  margin-top: 4px;
   font-weight: 500;
 }
 
@@ -157,16 +146,21 @@
 }
 
 .stat-card {
-  background-color: var(--bg-card) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: 16px !important;
-  padding: 24px !important;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   align-items: center;
   gap: 20px;
   transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   position: relative;
   overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .stat-icon-wrapper {
@@ -180,43 +174,54 @@
 }
 
 .stat-value {
-  margin: 0 !important;
-  font-size: 1.8rem !important;
-  font-weight: 700 !important;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
   line-height: 1.2;
 }
 
 .stat-label { font-size: 0.9rem; color: var(--text-secondary); font-weight: 500; }
 
-.stat-card.blue:hover { border-color: var(--brand-blue) !important; }
+.stat-card.blue:hover { border-color: var(--brand-blue); }
 .stat-card.blue .stat-icon-wrapper { background: var(--brand-blue-dim); color: var(--brand-blue); }
-.stat-card.orange:hover { border-color: var(--brand-orange) !important; }
+
+.stat-card.orange:hover { border-color: var(--brand-orange); }
 .stat-card.orange .stat-icon-wrapper { background: var(--brand-orange-dim); color: var(--brand-orange); }
-.stat-card.green:hover { border-color: var(--brand-green) !important; }
+
+.stat-card.green:hover { border-color: var(--brand-green); }
 .stat-card.green .stat-icon-wrapper { background: var(--brand-green-dim); color: var(--brand-green); }
 
 /* 4. CONTENT SURFACES */
 .dashboard-surface {
-  background-color: var(--bg-card) !important;
+  background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 16px !important;
+  border-radius: 16px;
   padding: 24px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 16px; /* Added generic gap for internal spacing */
 }
 
 .dashboard-split-layout {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
   gap: 24px;
+  align-items: start;
+}
+
+/* Responsive collapse for split layout */
+@media (max-width: 1024px) {
+  .dashboard-split-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .surface-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 8px; /* Reduced since surface handles gap */
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -224,6 +229,12 @@
 .surface-title h3 { margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-primary); }
 
 /* 5. LIST COMPONENTS */
+.announcement-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .announcement-item {
   display: flex;
   gap: 16px;
@@ -231,9 +242,10 @@
   background-color: var(--bg-page);
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 12px;
-  margin-bottom: 12px;
   transition: border-color 0.2s;
 }
+
+.announcement-item:hover { border-color: var(--border-subtle); }
 
 .announce-date-box {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -243,10 +255,16 @@
 .announce-date-box .day { font-size: 1.4rem; font-weight: 800; color: var(--brand-blue); }
 .announce-date-box .month { font-size: 0.7rem; color: var(--text-secondary); }
 
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .task-item {
   display: flex; align-items: center; gap: 12px; padding: 14px;
   background-color: var(--bg-page); border: 1px solid rgba(255,255,255,0.05);
-  border-radius: 12px; margin-bottom: 10px; cursor: pointer; transition: 0.2s;
+  border-radius: 12px; cursor: pointer; transition: 0.2s;
 }
 .task-item:hover { border-color: var(--brand-blue); }
 
@@ -256,8 +274,9 @@
 }
 .task-item.completed .task-checkbox { background-color: var(--brand-green); border-color: var(--brand-green); }
 .task-item.completed .task-text { text-decoration: line-through; color: var(--text-muted); }
+
 /* 6. MANAGER TABLE & FILTERS */
-.filter-toolbar { display: flex; gap: 20px; margin-bottom: 32px; align-items: center; }
+.filter-toolbar { display: flex; gap: 20px; margin-bottom: 24px; align-items: center; }
 .search-field { width: 300px; transition: width 0.3s ease; }
 .search-field:focus-within { width: 350px; }
 
@@ -273,26 +292,22 @@
 
 .MuiTableBody-root td {
   border-bottom: 1px solid var(--border-subtle) !important;
-  color: #ffffff !important; /* UPDATED: Changed from #e2e8f0 to white */
+  color: #ffffff !important;
   padding: 16px !important;
 }
 
-/* Added specific targeting for all Table Cells */
-.MuiTableCell-root {
-  color: #ffffff !important;
-}
+.MuiTableCell-root { color: #ffffff !important; }
 
-.employee-name { color: var(--text-primary) !important; font-weight: 600 !important; }
-.employee-email { color: var(--text-muted) !important; font-size: 0.8rem !important; }
-.rating-val { color: var(--text-primary) !important; font-weight: 700; }
-.rating-max { color: var(--text-muted) !important; font-size: 0.8rem; }
+.employee-name { color: var(--text-primary); font-weight: 600; }
+.employee-email { color: var(--text-muted); font-size: 0.8rem; }
+.rating-val { color: var(--text-primary); font-weight: 700; }
+.rating-max { color: var(--text-muted); font-size: 0.8rem; }
 
 /* 7. GLOBAL MUI OVERRIDES */
 .MuiInputBase-input, 
 .MuiOutlinedInput-input, 
 .MuiSelect-select { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
 
-/* Fix for Search bar background inside the dashboard surface */
 .dashboard-surface .MuiOutlinedInput-root { background-color: var(--bg-page) !important; border-radius: 8px !important; }
 .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, 0.3) !important; border-width: 1px !important; transition: border-color 0.2s; }
 .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, 0.6) !important; }
@@ -301,51 +316,38 @@
 .MuiInputLabel-root.Mui-focused { color: var(--brand-blue) !important; }
 .MuiSelect-icon { color: var(--text-secondary) !important; }
 .MuiInputAdornment-root svg { color: #ffffff !important; opacity: 1 !important; }
-.MuiInputBase-root svg { 
-  color: #ffffff !important; 
-  stroke: #ffffff !important;
-  opacity: 1 !important;
-}
-/* Fix for MUI Dialog Paper */
+.MuiInputBase-root svg { color: #ffffff !important; stroke: #ffffff !important; opacity: 1 !important; }
+
 .MuiDialog-paper { 
   background-color: var(--bg-card) !important; 
   color: white !important; 
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-subtle) !important;
   border-radius: 16px !important;
 }
 
 /* 8. CHIPS & BUTTONS */
 .MuiChip-root { font-weight: 600 !important; border-radius: 6px !important; }
-.MuiChip-colorInfo { background-color: var(--brand-blue-dim) !important; color: #60a5fa !important; }
-.MuiChip-colorSuccess { background-color: var(--brand-green-dim) !important; color: #34d399 !important; }
-.MuiChip-colorWarning { background-color: var(--brand-orange-dim) !important; color: #fb923c !important; }
-.MuiChip-colorError { background-color: var(--brand-red-dim) !important; color: #f87171 !important; }
-.MuiButton-contained { background-color: var(--brand-blue) !important; color: white !important; text-transform: none !important; }
-.MuiButton-contained:hover { background-color: #2563eb !important; }
-.MuiButton-outlined { color: #cbd5e1 !important; border-color: var(--border-subtle) !important; text-transform: none !important; }
-.MuiButton-outlined:hover { background-color: rgba(255,255,255,0.05) !important; border-color: white !important; }
-.MuiChip-colorDefault {background-color: rgba(255, 255, 255, 0.1) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.1); }
+.MuiChip-colorInfo { background-color: var(--brand-blue-dim) !important; color: #60a5fa !important; border: 1px solid rgba(96, 165, 250, 0.2) !important; }
+.MuiChip-colorSuccess { background-color: var(--brand-green-dim) !important; color: #34d399 !important; border: 1px solid rgba(52, 211, 153, 0.2) !important; }
+.MuiChip-colorWarning { background-color: var(--brand-orange-dim) !important; color: #fb923c !important; border: 1px solid rgba(251, 146, 60, 0.2) !important; }
+.MuiChip-colorError { background-color: var(--brand-red-dim) !important; color: #f87171 !important; border: 1px solid rgba(248, 113, 113, 0.2) !important; }
+.MuiChip-colorDefault { background-color: rgba(255, 255, 255, 0.1) !important; color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; }
 
-/* 9. MODALS & CUSTOM ELEMENTS - UPDATED FOR MUI DIALOG */
+.MuiButton-contained { background-color: var(--brand-blue) !important; color: white !important; text-transform: none !important; border-radius: 8px !important; }
+.MuiButton-contained:hover { background-color: #2563eb !important; }
+.MuiButton-outlined { color: #cbd5e1 !important; border-color: var(--border-subtle) !important; text-transform: none !important; border-radius: 8px !important; }
+.MuiButton-outlined:hover { background-color: rgba(255,255,255,0.05) !important; border-color: white !important; }
+
+/* 9. MODALS & CUSTOM ELEMENTS */
 .MuiDialogTitle-root {
   background-color: var(--bg-card) !important;
   color: white !important;
   font-weight: 700 !important;
-  border-bottom: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle) !important;
 }
+.MuiDialogContent-root { background-color: var(--bg-card) !important; padding: 24px !important; }
+.MuiDialogActions-root { background-color: var(--bg-card) !important; border-top: 1px solid var(--border-subtle) !important; padding: 16px 24px !important; }
 
-.MuiDialogContent-root {
-  background-color: var(--bg-card) !important;
-  padding: 24px !important;
-}
-
-.MuiDialogActions-root {
-  background-color: var(--bg-card) !important;
-  border-top: 1px solid var(--border-subtle);
-  padding: 16px 24px !important;
-}
-
-/* Preserving your custom modal classes as requested */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
   background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px);
@@ -367,16 +369,11 @@
 .modal-input:focus { border-color: var(--brand-blue); }
 
 /* --- ADMIN DASHBOARD ADDITIONS --- */
-
 .admin-stats-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Updated for responsiveness */
   gap: 20px;
   margin-bottom: 32px;
-}
-
-@media (max-width: 1100px) {
-  .admin-stats-row { grid-template-columns: repeat(2, 1fr); }
 }
 
 .stat-card-compact {
@@ -387,7 +384,12 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card-compact:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .stat-icon-wrapper-sm {
@@ -411,7 +413,6 @@
 
 .title-group { display: flex; align-items: center; gap: 12px; }
 
-/* Enhanced Badge/Chip Styling */
 .badge-count { 
   background: var(--brand-blue-dim); 
   color: var(--brand-blue); 
@@ -426,14 +427,10 @@
   letter-spacing: 0.5px;
   text-transform: uppercase;
   border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
 }
 
 .action-group { display: flex; gap: 20px; align-items: center; }
 
-.chip-new { background: var(--brand-green-dim) !important; color: var(--brand-green) !important; font-weight: 700 !important; }
-
-/* Bottom Widget Refinements */
 .announcement-item-mini {
   display: flex;
   align-items: center;
@@ -485,5 +482,75 @@
   cursor: pointer;
   padding: 8px;
   border-radius: 8px;
+  transition: color 0.2s, background-color 0.2s;
 }
 .icon-btn-subtle:hover { background: var(--bg-page); color: var(--text-primary); }
+
+.surface-action button {
+  background-color: var(--bg-page);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.surface-action button:hover:not(:disabled) {
+  background-color: var(--brand-blue-dim);
+  color: var(--brand-blue);
+  border-color: var(--brand-blue);
+}
+
+.surface-action button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+
+/* 2. Fix the Attendance Pill & Button fit */
+.attendance-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.03); /* Subtle backdrop */
+  padding: 4px; /* Very tight padding so the button fills it cleanly */
+  border-radius: 30px;
+  border: 1px solid var(--border-subtle);
+  transition: all 0.3s ease;
+}
+
+/* Add left space ONLY when the timer is active/visible */
+.attendance-pill.active {
+  padding-left: 16px; 
+}
+
+/* Force the MUI button inside to fit the pill's curves perfectly */
+.attendance-pill .MuiButton-root {
+  border-radius: 24px !important; /* Fully rounded */
+  padding: 6px 16px !important;
+  box-shadow: none !important;
+  font-weight: 600 !important;
+}
+
+
+/* 3. Fix the "Submit New Item" Button visibility */
+.task-list + .MuiButton-outlined {
+  margin-top: 20px !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: var(--text-primary) !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.task-list + .MuiButton-outlined:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: white !important;
+}
