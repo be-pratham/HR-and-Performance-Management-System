@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import './DashboardStyles.css';
 
-
-// Lazy load the child views
 const AdminDashboard = lazy(() => import('./views/AdminDashboard'));
 const ManagerDashboard = lazy(() => import('./views/ManagerDashboard'));
 const EmployeeDashboard = lazy(() => import('./views/EmployeeDashboard'));
@@ -12,7 +10,6 @@ const EmployeeDashboard = lazy(() => import('./views/EmployeeDashboard'));
 const DashboardPage = () => {
   const { user, loading } = useSelector((state) => state.auth);
 
-  // Fallback UI for when the component is downloading or auth is checking
   const LoadingScreen = () => (
     <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: 2 }}>
       <CircularProgress sx={{ color: 'var(--brand-blue)' }} />

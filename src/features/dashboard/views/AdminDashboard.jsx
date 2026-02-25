@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Users, UserPlus, Briefcase, ShieldCheck, Search, Trash2, Edit } from 'lucide-react';
 import { Button, Snackbar, Alert, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Chip, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Box } from '@mui/material';
 import { addEmployee, deleteEmployee, updateEmployee, setSearchTerm, selectFilteredEmployees } from '../../../store/reducers/employeeSlice';
-
-// Shared UI Imports
 import DashboardHeader from '../../../components/ui/DashboardHeader';
 import DatePill from '../../../components/ui/DatePill';
 import StatCard from '../../../components/ui/StatCard';
@@ -121,7 +119,6 @@ const AdminDashboard = () => {
         </TableContainer>
       </SurfaceCard>
 
-      {/* Keep Dialog and Snackbar here for now */}
       <Dialog open={open} onClose={handleClose} fullWidth maxWidth="xs">
         <DialogTitle>{isEditing ? 'Edit Employee' : 'Add New Employee'}</DialogTitle>
         <DialogContent dividers>

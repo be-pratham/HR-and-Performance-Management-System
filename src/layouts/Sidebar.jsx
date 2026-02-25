@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux'; // Redux Hook
-import { LayoutDashboard, Target, FileText, MessageSquare, Settings, Users } from 'lucide-react';
+import { LayoutDashboard, Target, FileText, MessageSquare, Settings, Users, Coins } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -45,6 +45,12 @@ const Sidebar = () => {
       path: '/settings', 
       icon: Settings, 
       label: 'Settings',
+    },
+    { 
+      path: '/bonus', 
+      icon: Coins,
+      label: 'Bonus',
+      allowedRoles: ['admin']
     },
   ];
 

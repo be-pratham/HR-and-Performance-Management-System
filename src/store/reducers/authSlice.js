@@ -22,18 +22,23 @@ export const loginUser = createAsyncThunk(
       } else {
         return rejectWithValue('Invalid credentials');
       }
-    } catch (error) {
+    } catch {
       return rejectWithValue('Server Error');
     }
   }
 );
 
-const storedUser = JSON.parse(localStorage.getItem('user'));
+let storedUser = null;
+try {
+  storedUser = JSON.parse(localStorage.getItem('user'));
+} catch {
+  storedUser = null;
+}
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: storedUser || null,
+    user: storedUser,
     isAuthenticated: !!storedUser,
     loading: false,
     error: null,
@@ -45,9 +50,28 @@ const authSlice = createSlice({
       state.error = null;
       localStorage.removeItem('user');
     },
+
     clearError: (state) => {
       state.error = null;
-    }
+    },
+
+    loginByEmail: (state, action) => {
+      const { email, allEmployees } = action.payload;
+      const foundUser = allEmployees.find(
+        (emp) => emp.email.toLowerCase() === email.toLowerCase()
+      );
+
+      if (foundUser) {
+        state.user = foundUser;
+        state.isAuthenticated = true;
+        localStorage.setItem('user', JSON.stringify(foundUser));
+      }
+    },
+    logout: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      localStorage.removeItem('user');
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,11 +79,13 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
+
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.isAuthenticated = true;
         state.user = action.payload;
       })
+
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
@@ -67,5 +93,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearError } = authSlice.actions;
+export const { logout, clearError, loginByEmail } = authSlice.actions;
 export default authSlice.reducer;

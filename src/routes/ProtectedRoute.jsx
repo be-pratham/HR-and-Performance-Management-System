@@ -4,33 +4,31 @@ import { useSelector } from 'react-redux';
 import { Box, CircularProgress } from '@mui/material';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  // 1. Grab auth state from Redux
   const { user, loading, isAuthenticated } = useSelector((state) => state.auth);
   const location = useLocation();
 
-  // 2. Handle the "Bootstrapping" state
-  // If the app is still checking localStorage on refresh, show a loader
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh" bgcolor="#0b1120">
         <CircularProgress />
       </Box>
     );
   }
 
-  // 3. If not logged in, redirect to login
-  // We save the 'from' location so we can redirect them back after they log in
   if (!isAuthenticated || !user) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // 4. Role-Based Access Control (RBAC) check
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    // Redirect to a neutral page (like dashboard) if they aren't authorized for this specific route
+  // Normalize roles to lowercase to prevent "Manager" vs "manager" mismatches
+  const userRole = user.role?.toLowerCase();
+  const normalizedAllowedRoles = allowedRoles.map(role => role.toLowerCase());
+
+  if (allowedRoles && !normalizedAllowedRoles.includes(userRole)) {
+    // If they are an Admin trying to access an Employee page, send them to Admin Dashboard
+    // If they are an Employee trying to access Admin page, send them to Employee Dashboard
     return <Navigate to="/dashboard" replace />;
   }
 
-  // 5. If all checks pass, render the child routes (Outlet)
   return <Outlet />;
 };
 

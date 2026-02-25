@@ -1,67 +1,52 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Plus, Search, X, User, Mail, Briefcase, Building, Trash2 } from 'lucide-react';
-
-const MOCK_EMPLOYEES = [
-  { id: 1, name: "Alice Johnson", email: "alice@navajna.com", role: "Manager", department: "Engineering", status: "Active" },
-  { id: 2, name: "Bob Smith", email: "bob@navajna.com", role: "Employee", department: "Design", status: "Active" },
-  { id: 3, name: "Charlie Davis", email: "charlie@navajna.com", role: "Employee", department: "Marketing", status: "On Leave" },
-  { id: 4, name: "Diana Prince", email: "diana@navajna.com", role: "Admin", department: "HR", status: "Active" },
-  { id: 5, name: "Evan Wright", email: "evan@navajna.com", role: "Employee", department: "Engineering", status: "Inactive" },
-];
+import { addEmployee, deleteEmployee, setSearchTerm, selectFilteredEmployees} from '../../store/reducers/employeeSlice';
 
 const EmployeesPage = () => {
-  const [employees, setEmployees] = useState(MOCK_EMPLOYEES);
-  const [searchTerm, setSearchTerm] = useState('');
+  const dispatch = useDispatch();
+  
+  // 1. Get data from Redux instead of local state
+  const filteredEmployees = useSelector(selectFilteredEmployees);
+  const { searchTerm } = useSelector((state) => state.employees);
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  // New Employee Form State
+  // New Employee Form State (Keep this local as it's only for the form)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     role: 'Employee',
-    department: '',
+    dept: '', // Changed to 'dept' to match your slice
     status: 'Active'
   });
 
-  // Handle Search
-  const filteredEmployees = employees.filter(emp => 
-    emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    emp.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Handle Form Change
+  // 2. Handlers using Dispatch
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  // Handle Form Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newEmployee = {
-      id: employees.length + 1,
-      ...formData
-    };
-    setEmployees([...employees, newEmployee]);
-    setIsModalOpen(false); // Close modal
-    setFormData({ name: '', email: '', role: 'Employee', department: '', status: 'Active' }); // Reset form
+    dispatch(addEmployee(formData));
+    setIsModalOpen(false); 
+    setFormData({ name: '', email: '', role: 'Employee', dept: '', status: 'Active' }); 
   };
 
-  // Handle Delete
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to remove this employee?")) {
-      setEmployees(employees.filter(emp => emp.id !== id));
+      dispatch(deleteEmployee(id));
     }
   };
 
-  // Styles
+  // 3. Styles (Preserved your style objects)
   const cardStyle = { backgroundColor: '#1e293b', borderRadius: '8px', border: '1px solid #334155' };
   const inputStyle = { width: '100%', padding: '10px', marginTop: '5px', marginBottom: '15px', borderRadius: '6px', border: '1px solid #475569', backgroundColor: '#0f172a', color: '#fff' };
   const labelStyle = { fontSize: '0.9rem', color: '#94a3b8' };
 
   return (
-    <div style={{ padding: '20px', color: '#fff' }}>
-      
+    <div style={{ padding: '20px', color: '#fff' }}>      
       {/* --- Page Header --- */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <div>
@@ -72,7 +57,8 @@ const EmployeesPage = () => {
           onClick={() => setIsModalOpen(true)}
           style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#3b82f6', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '6px', cursor: 'pointer', fontWeight: '500' }}
         >
-          <Plus size={18} /> Add Employee
+          <Plus size={18} />
+          Add Employee
         </button>
       </div>
 
@@ -83,7 +69,8 @@ const EmployeesPage = () => {
           type="text" 
           placeholder="Search employees..." 
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          // Dispatch search to Redux so it filters everywhere
+          onChange={(e) => dispatch(setSearchTerm(e.target.value))}
           style={{ width: '100%', padding: '10px 10px 10px 40px', borderRadius: '8px', border: '1px solid #334155', backgroundColor: '#1e293b', color: '#fff' }}
         />
       </div>
@@ -115,7 +102,8 @@ const EmployeesPage = () => {
                   </div>
                 </td>
                 <td style={{ padding: '16px' }}>{emp.role}</td>
-                <td style={{ padding: '16px' }}>{emp.department}</td>
+                {/* Changed from emp.department to emp.dept to match slice */}
+                <td style={{ padding: '16px' }}>{emp.dept}</td>
                 <td style={{ padding: '16px' }}>
                   <span style={{ 
                     padding: '4px 12px', borderRadius: '99px', fontSize: '12px', fontWeight: '500',
@@ -136,13 +124,6 @@ const EmployeesPage = () => {
                 </td>
               </tr>
             ))}
-            {filteredEmployees.length === 0 && (
-              <tr>
-                <td colSpan="5" style={{ padding: '30px', textAlign: 'center', color: '#94a3b8' }}>
-                  No employees found.
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </div>
@@ -155,7 +136,6 @@ const EmployeesPage = () => {
         }}>
           <div style={{ ...cardStyle, width: '450px', padding: '24px', position: 'relative' }}>
             
-            {/* Modal Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
               <h2 style={{ fontSize: '20px', fontWeight: 'bold' }}>Register New Employee</h2>
               <button onClick={() => setIsModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>
@@ -163,7 +143,6 @@ const EmployeesPage = () => {
               </button>
             </div>
 
-            {/* Modal Form */}
             <form onSubmit={handleSubmit}>
               <div>
                 <label style={labelStyle}>Full Name</label>
@@ -197,10 +176,10 @@ const EmployeesPage = () => {
                   <div style={{ position: 'relative' }}>
                     <Building size={16} style={{ position: 'absolute', top: '15px', left: '10px', color: '#94a3b8' }} />
                     <input 
-                      name="department" required
+                      name="dept" required // Changed from department to dept
                       style={{ ...inputStyle, paddingLeft: '35px' }} 
                       placeholder="Engineering"
-                      value={formData.department} onChange={handleInputChange}
+                      value={formData.dept} onChange={handleInputChange}
                     />
                   </div>
                 </div>
@@ -228,11 +207,9 @@ const EmployeesPage = () => {
                 Create Account
               </button>
             </form>
-
           </div>
         </div>
       )}
-
     </div>
   );
 };

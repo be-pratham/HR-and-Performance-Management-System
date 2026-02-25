@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, BookOpen, Check, FileText, Bell, X, User, ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button, Snackbar, Alert } from '@mui/material';
 import { useAuth } from '../../../context/AuthContext';
-import { useAttendance } from '../../../context/AttendanceContext'; 
-
-// Shared UI & Feature Imports
 import DashboardHeader from '../components/DashboardHeader';
 import DatePill from '../components/DatePill';
 import StatCard from '../components/Statcard';
@@ -16,7 +13,6 @@ const EmployeeDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   
-  // --- Mock Data ---
   const stats = [
     { id: 1, label: "Pending Reviews", value: "3", icon: FileText, color: "blue" },
     { id: 2, label: "Learning Completed", value: "12 hrs", icon: BookOpen, color: "purple" },
@@ -33,7 +29,6 @@ const EmployeeDashboard = () => {
     { id: 2, text: "Team Sync with Design", time: "11:30 AM", completed: false },
   ]);
 
-  // --- UI State ---
   const [announcementPage, setAnnouncementPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTask, setActiveTask] = useState(null); 
@@ -99,8 +94,7 @@ const EmployeeDashboard = () => {
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'space-between', width: '100%' }}>
                     <h3>My Day</h3><Clock size={20} color="var(--text-secondary)" />
                 </div>
-            }
-        >
+            }>
           <div className="task-list">
             {tasks.map(task => (
                 <div key={task.id} className={`task-item ${task.completed ? 'completed' : ''}`} onClick={() => handleTaskClick(task)}>
@@ -112,10 +106,8 @@ const EmployeeDashboard = () => {
           </div>
           <Button variant="outlined" fullWidth sx={{ mt: 3 }} onClick={() => setIsModalOpen(true)}>Submit New Item</Button>
         </SurfaceCard>
-
       </div>
     </div>
   );
 };
-
 export default EmployeeDashboard;

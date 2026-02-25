@@ -538,8 +538,6 @@
   font-weight: 600 !important;
 }
 
-
-/* 3. Fix the "Submit New Item" Button visibility */
 .task-list + .MuiButton-outlined {
   margin-top: 20px !important;
   border-color: rgba(255, 255, 255, 0.15) !important;

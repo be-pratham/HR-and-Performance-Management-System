@@ -11,6 +11,8 @@ import FeedbackPage from '../features/feedback/FeedbackPage';
 import SettingsPage from '../features/settings/SettingsPage';
 import ReviewsPage from '../features/reviews/ReviewsPage';
 import EmployeesPage from '../features/employees/EmployeeList';
+import BonusManagement from '../features/bonus/bonus';
+
 const NotFound = () => (
   <div style={{ textAlign: 'center', marginTop: '50px', color: '#fff' }}>
     <h1>404 - Page Not Found</h1>
@@ -54,11 +56,11 @@ const AppRoutes = () => {
 
         {/* Manager & Employee Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.EMPLOYEE, ROLES.MANAGER]} />}>
-          {/* <Route path="/leavepage" element={<LeavePage />} /> */}
           <Route path="/reviews" element={<ReviewsPage />} /> 
           <Route path="/goals" element={<GoalPage />} />
           <Route path="/feedback" element={<FeedbackPage />} />
           {/* <Route path="/learning" element={<LearningPage />} />   */}
+          {/* <Route path="/leavepage" element={<LeavePage />} /> */}
         </Route>
         {/* Manager Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.MANAGER]} />}>
@@ -66,7 +68,7 @@ const AppRoutes = () => {
         </Route>
         {/* Admin Only */}
         <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
-          {/* <Route path="/announcements" element={<AnnouncementsPage />} /> */}
+          <Route path="/bonus" element={<BonusManagement />} />
           {/* <Route path="/attendance" element={<AttendancePage />} /> */}
           <Route path="/employees" element={<EmployeesPage />} />
           {/* <Route path="/policies" element={<PolicyPage />} /> */}
