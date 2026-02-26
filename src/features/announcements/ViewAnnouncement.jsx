@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react'; // Added useEffect
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, User, Tag } from 'lucide-react';
+import { useDispatch } from 'react-redux'; // Added
+import { ArrowLeft, Calendar, User } from 'lucide-react';
+import { markAsRead } from './announcementsSlice'; // Added
 
 const AnnouncementViewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   
-  // Retrieve the data passed from the list page
   const { announcement } = location.state || {};
 
-  // Fallback if user tries to access this URL directly without clicking a link
+  // 1. Mark as read when the user views the announcement
+  useEffect(() => {
+    if (announcement && !announcement.read) {
+      dispatch(markAsRead(announcement.id));
+    }
+  }, [dispatch, announcement]);
+
   if (!announcement) {
     return (
       <div style={{ padding: '50px', textAlign: 'center', color: '#fff' }}>
@@ -23,8 +31,6 @@ const AnnouncementViewPage = () => {
 
   return (
     <div style={{ padding: '20px', color: '#fff', maxWidth: '800px', margin: '0 auto' }}>
-      
-      {/* Back Button */}
       <button 
         onClick={() => navigate(-1)} 
         style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer', marginBottom: '20px', fontSize: '14px' }}
@@ -32,10 +38,7 @@ const AnnouncementViewPage = () => {
         <ArrowLeft size={18} /> Back 
       </button>
 
-      {/* Content Card */}
       <div style={{ backgroundColor: '#1e293b', borderRadius: '12px', border: '1px solid #334155', overflow: 'hidden' }}>
-        
-        {/* Header Section */}
         <div style={{ padding: '30px', borderBottom: '1px solid #334155', backgroundColor: '#0f172a' }}>
           <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
              <span style={{ fontSize: '12px', padding: '4px 10px', borderRadius: '99px', backgroundColor: announcement.priority === 'High' ? 'rgba(239, 68, 68, 0.2)' : 'rgba(59, 130, 246, 0.2)', color: announcement.priority === 'High' ? '#f87171' : '#60a5fa', fontWeight: '500' }}>
@@ -54,14 +57,11 @@ const AnnouncementViewPage = () => {
           </div>
         </div>
 
-        {/* Body Section */}
         <div style={{ padding: '40px', fontSize: '16px', lineHeight: '1.8', color: '#e2e8f0' }}>
-          {/* We use whitespace-pre-wrap to preserve line breaks from the textarea */}
           <div style={{ whiteSpace: 'pre-wrap' }}>
             {announcement.content}
           </div>
         </div>
-
       </div>
     </div>
   );
